@@ -2,9 +2,11 @@ import json
 
 
 class Mapper:
-    def __init__(self, json_string):
+    def __init__(self):
+        self.attribute_map = []
         self.json_string = ""
         self.json_object = None
-        self.attribute_map = []
+
+    def map(self, json_string):
         self.json_string = json_string
-        self.json_object = json.loads(json)
+        self.json_object = json.loads(json_string)

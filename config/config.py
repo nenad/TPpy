@@ -1,7 +1,7 @@
 import json
 import os
 
-config_file = "../config.json"
+config_file = os.path.dirname(__file__) + "/../config.json"
 
 
 def get(config_var):
@@ -9,5 +9,7 @@ def get(config_var):
         print "No config file found!"
         exit()
 
-    json_config_object = json.loads(open(config_file, 'r'))
+    file_contents = open(config_file, 'r').read()
+
+    json_config_object = json.loads(file_contents)
     return json_config_object[config_var]
