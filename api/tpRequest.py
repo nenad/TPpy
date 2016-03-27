@@ -18,7 +18,7 @@ class TPRequest:
         self.includedProperties = properties
 
     def setId(self, project_id):
-        self.project_id = "/" + project_id
+        self.project_id = "/" + project_id.__str__()
 
     def get(self, url="", return_format='json'):
         return_format = "?format=" + return_format

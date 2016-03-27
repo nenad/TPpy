@@ -1,7 +1,10 @@
 import json
 import os
 
+import sys
+
 config_file = os.path.dirname(__file__) + "/../config.json"
+project_vars = None
 
 
 def get(config_var):
@@ -13,3 +16,14 @@ def get(config_var):
 
     json_config_object = json.loads(file_contents)
     return json_config_object[config_var]
+
+
+def loadProjectConfig():
+    global project_vars
+    path = sys.path[1] + "/.tppy.json"
+    if os.path.isfile(path):
+        project_vars = json.loads(open(path).read())
+
+
+def project_var(var):
+    return project_vars[var]

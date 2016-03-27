@@ -30,5 +30,5 @@ class ProjectHTTPImpl(ProjectRepository):
         request.setBasicUrl(self.tp.getEntityTypeURL(self.entityType))
         request.setId(project_id)
         response = request.get()
-        json_object = json.loads(response)
+        json_object = json.loads(response.content)
         return self.projectMapper.map(json_object)
