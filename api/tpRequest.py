@@ -27,3 +27,8 @@ class TPRequest:
             url = self.basicUrl
         return requests.get(url + self.project_id + return_format + properties,
                             auth=HTTPBasicAuth(self.username, self.password))
+
+    def post(self, url="", data=""):
+        if url == "":
+            url = self.basicUrl
+        return requests.post(url, data, auth=HTTPBasicAuth(self.username, self.password))

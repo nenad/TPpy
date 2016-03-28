@@ -21,9 +21,15 @@ def get(config_var):
 def loadProjectConfig():
     global project_vars
     path = sys.path[1] + "/.tppy.json"
+    print path
     if os.path.isfile(path):
         project_vars = json.loads(open(path).read())
 
 
-def project_var(var):
+def get_project_var(var):
     return project_vars[var]
+
+
+def set_project_var(var, value):
+    global project_vars
+    project_vars[var] = value

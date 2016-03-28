@@ -5,19 +5,26 @@ from config import config
 
 
 def main(args=None):
-    print sys.argv[1:]
-
     if args is None:
         args = sys.argv[1:]
 
     config.loadProjectConfig()
 
-    module = importlib.import_module('tppy.namespaces.' + args[0])
-    func = getattr(module, args[1])
-    if len(args[2:]) > 0:
-        func(args[2])
-    else:
+    if len(args) == 0:
+        print "You must specify module"
+    elif len(args) == 1:
+        module = importlib.import_module('tppy.namespaces.' + args[0])
+        func = getattr(module, 'main')
         func()
+    else:
+        module = importlib.import_module('tppy.namespaces.' + args[0])
+        func = getattr(module, args[1])
+        if len(args[2:]) == 1:
+            func(args[2])
+        elif len(args[2:]) == 2:
+            func(args[2], args[3])
+        else:
+            func()
 
 
 if __name__ == "__main__":
