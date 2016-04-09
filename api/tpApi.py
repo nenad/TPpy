@@ -1,5 +1,5 @@
 from api.tpRequest import TPRequest
-from config import config
+from configuration import config
 
 
 class TPApi:

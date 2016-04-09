@@ -9,7 +9,7 @@ project_vars = None
 
 def get(config_var):
     if not os.path.isfile(config_file):
-        print "No config file found!"
+        print "No configuration file found!"
         exit()
 
     file_contents = open(config_file, 'r').read()
@@ -21,7 +21,6 @@ def get(config_var):
 def loadProjectConfig():
     global project_vars
     path = sys.path[1] + "/.tppy.json"
-    print path
     if os.path.isfile(path):
         project_vars = json.loads(open(path).read())
 

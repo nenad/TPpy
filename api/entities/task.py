@@ -3,15 +3,15 @@ from api.tpRequest import TPRequest
 from api.tpApi import TPApi
 
 
-def create(name, project_id):
+def create(name, story_id):
     api = TPApi()
     request = TPRequest()
-    request.setBasicUrl(api.getEntityTypeURL())
+    request.setBasicUrl(api.getEntityTypeURL('Tasks'))
 
     data = {
-        'Name': name,
-        'Project': {
-            "Id": project_id
+        "Name": name,
+        "UserStory": {
+            "Id": story_id
         }
     }
 

@@ -1,4 +1,4 @@
-from config import config
+from configuration import config
 
 
 def set_project(project_id):

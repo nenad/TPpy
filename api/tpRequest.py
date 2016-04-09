@@ -1,11 +1,11 @@
-from config import config
+from configuration import config
 import requests
 from requests.auth import HTTPBasicAuth
 
 
 class TPRequest:
     def __init__(self):
-        self.project_id = ""
+        self.entity_id = ""
         self.username = config.get('username')
         self.password = config.get('password')
         self.basicUrl = ""
@@ -17,15 +17,15 @@ class TPRequest:
     def setIncludedProperties(self, properties):
         self.includedProperties = properties
 
-    def setId(self, project_id):
-        self.project_id = "/" + project_id.__str__()
+    def setId(self, entity_id):
+        self.entity_id = "/" + entity_id.__str__()
 
     def get(self, url="", return_format='json'):
         return_format = "?format=" + return_format
         properties = "&include=[" + ",".join(self.includedProperties) + "]"
         if url == "":
             url = self.basicUrl
-        return requests.get(url + self.project_id + return_format + properties,
+        return requests.get(url + self.entity_id + return_format + properties,
                             auth=HTTPBasicAuth(self.username, self.password))
 
     def post(self, url="", data=""):

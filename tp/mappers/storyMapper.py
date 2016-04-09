@@ -1,6 +1,5 @@
 from tp.mappers.Mapper import Mapper
 
-
-class TaskMapper(Mapper):
-    def __init__(self, json_string):
+class StoryMapper(Mapper):
+    def __init__(self):
         Mapper.__init__(self)

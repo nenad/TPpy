@@ -1,7 +1,8 @@
 import importlib
 import sys
+import os
 
-from config import config
+from configuration import config
 
 
 def main(args=None):
@@ -23,6 +24,8 @@ def main(args=None):
             func(args[2])
         elif len(args[2:]) == 2:
             func(args[2], args[3])
+        elif len(args[2:]) == 3:
+            func(args[2], args[3], args[4])
         else:
             func()
 
