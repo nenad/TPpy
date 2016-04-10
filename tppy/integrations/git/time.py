@@ -1,17 +1,36 @@
 import subprocess
-
 import re
-import types
 
 from repositories.story.storyHttpImpl import StoryHTTPImpl
+from tppy.namespaces import time
+import api.entities.task as taskEntity
 
 
-def add(description, time):
+def add(description, hours):
     story_id = _getTicketNumber(_getCurrentBranch())
-    # Get tasks
-    tasks = StoryHTTPImpl().findWithTasks(story_id)
-    # If not exist, create task
-    # Decide task
+    story = StoryHTTPImpl().findWithTasks(story_id)
+    tasks = story.tasks if story.tasks is not None else []
+
+    while True:
+        if len(tasks) > 0:
+            print "[0] CREATE NEW TASK"
+            for index, task in enumerate(tasks, 1):
+                print "[%d] %s" % (index, task.name)
+        try:
+            selected = int(raw_input("\nEnter selection [0 - %d]: " % len(tasks)))
+            if selected == 0:
+                taskName = raw_input('\nEnter new task name: ')
+                newTask = taskEntity.create(taskName, story.id)
+                time.create(description, hours, newTask.id)
+                break
+            elif 0 < selected <= len(tasks):
+                time.create(description, hours, tasks[selected - 1].id)
+                break
+            else:
+                print "\nInput not valid!"
+        except ValueError:
+            print "\nInput not valid!"
+
     # Add time to task
     print "Added time"
 

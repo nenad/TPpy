@@ -34,7 +34,10 @@ def main(args=None):
             argIndex = i + startingParam + 1
             argExpression += 'args[' + argIndex.__str__() + '],'
         argExpression = argExpression[:-1]
-        eval('func(' + argExpression + ')')
+        try:
+            eval('func(' + argExpression + ')')
+        except KeyboardInterrupt:
+            print "\nExited"
 
 
 if __name__ == "__main__":
