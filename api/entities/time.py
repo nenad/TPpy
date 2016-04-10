@@ -1,6 +1,7 @@
 import json
 from api.tpRequest import TPRequest
 from api.tpApi import TPApi
+from tp.mappers.timeMapper import TimeMapper
 
 
 def create(description, hours, assignable_id):
@@ -16,4 +17,5 @@ def create(description, hours, assignable_id):
         }
     }
 
-    request.post('', json.dumps(data))
+    response = request.post('', json.dumps(data))
+    return TimeMapper().map(json.loads(response.content))
