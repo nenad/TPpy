@@ -19,15 +19,15 @@ def main(args=None):
         func()
     else:
         module = importlib.import_module('tppy.namespaces.' + args[0])
+
+        # Call namespaced class function with it's arguments
+        argExpression = ''
         func = getattr(module, args[1])
-        if len(args[2:]) == 1:
-            func(args[2])
-        elif len(args[2:]) == 2:
-            func(args[2], args[3])
-        elif len(args[2:]) == 3:
-            func(args[2], args[3], args[4])
-        else:
-            func()
+        for i in range(0, len(args[2:])):
+            argIndex = i + 2
+            argExpression += 'args[' + argIndex.__str__() + '],'
+        argExpression = argExpression[:-1]
+        eval('func(' + argExpression + ')')
 
 
 if __name__ == "__main__":

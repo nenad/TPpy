@@ -1,6 +1,6 @@
 from configuration import config
-import requests
 from requests.auth import HTTPBasicAuth
+import requests
 
 
 class TPRequest:
@@ -31,4 +31,8 @@ class TPRequest:
     def post(self, url="", data=""):
         if url == "":
             url = self.basicUrl
+        if '?' in url:
+            url += '&format=json'
+        else:
+            url += '?format=json'
         return requests.post(url, data, auth=HTTPBasicAuth(self.username, self.password))

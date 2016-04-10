@@ -1,6 +1,7 @@
 import json
 from api.tpRequest import TPRequest
 from api.tpApi import TPApi
+from tp.mappers.taskMapper import TaskMapper
 
 
 def create(name, story_id):
@@ -15,4 +16,5 @@ def create(name, story_id):
         }
     }
 
-    request.post('', json.dumps(data))
+    response = request.post('', json.dumps(data))
+    return TaskMapper().map(json.loads(response.content))

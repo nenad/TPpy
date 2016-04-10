@@ -4,21 +4,21 @@ from tp.models.entity import Entity
 class Task(Entity):
     def __init__(self):
         Entity.__init__(self)
-        self.name = ""  # String
-        self.description = ""  # String
+        self.name = None  # String
+        self.description = None  # String
         self.startDate = None
         self.endDate = None
         self.createDate = None
         self.modifyDate = None
         self.lastCommentDate = None
-        self.tags = []
-        self.numericPriority = 0
-        self.effort = 0.0
-        self.effortCompleted = 0.0
-        self.effortToDo = 0.0
-        self.progress = 0.0
-        self.timeSpent = 0.0
-        self.timeRemain = 0.0
+        self.tags = None
+        self.numericPriority = None
+        self.effort = None
+        self.effortCompleted = None
+        self.effortToDo = None
+        self.progress = None
+        self.timeSpent = None
+        self.timeRemain = None
         self.plannedStartDate = None
         self.plannedEndDate = None
         self.entityType = None
@@ -34,4 +34,4 @@ class Task(Entity):
         self.entityState = None
         self.responsibleTeam = None
         self.userStory = None
-        self.customFields = []
+        self.customFields = None
