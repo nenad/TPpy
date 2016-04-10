@@ -7,3 +7,4 @@ class Time(Entity):
         self.description = None
         self.spent = None
         self.remain = None
+        self.createDate = None

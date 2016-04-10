@@ -12,5 +12,6 @@ class TimeMapper(Mapper):
         time.description = json_string['Description']
         time.spent = json_string['Spent']
         time.remain = json_string['Remain']
+        time.createDate = json_string['CreateDate']
 
         return time
