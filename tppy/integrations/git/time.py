@@ -71,7 +71,7 @@ def today():
 
 def add_prompt(description):
     try:
-        hours = float(raw_input("How much hours did you spent on this ticket? "))
+        hours = float(raw_input("How many hours did you spent on this ticket? (ex. 2.5)  "))
         add(description, hours)
     except:
         print "Not a valid input"
