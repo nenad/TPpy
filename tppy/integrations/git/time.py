@@ -1,3 +1,4 @@
+from repositories.assignable.assignableRepo import AssignableRepository
 from repositories.story.storyHttpImpl import StoryHTTPImpl
 from tppy.integrations.git.exceptions.NoSuitableBranchFound import NoSuitableBranchFound
 from tppy.namespaces import time
@@ -10,11 +11,17 @@ from colorama import Fore
 
 def add(description, hours):
     init()
+    assignable_id = getTicketNumber(getCurrentBranch())
+    assignable = None
     try:
-        assignable_id = getTicketNumber(getCurrentBranch())
+        assignable = AssignableRepository().find(assignable_id)
+    except:
+        print "Can't find ticket with ID: %s" % assignable_id
+        exit()
+
+    if assignable.entityType == 'UserStory':
         story = StoryHTTPImpl().findWithTasks(assignable_id)
         tasks = story.tasks if story.tasks is not None else []
-
         while True:
             if len(tasks) > 0:
                 print "[0] CREATE NEW TASK"
@@ -34,11 +41,12 @@ def add(description, hours):
                     print "\nInput not valid!"
             except ValueError:
                 print "\nInput not valid!"
+    else:
+        time.create(description, hours, assignable_id)
 
-        # Add time to task
-        print Fore.GREEN + "Added time"
-    except NoSuitableBranchFound:
-        print Fore.RED + "Cannot add time to this branch. Try checking out to a suitable branch first."
+    # Add time to task
+    print Fore.GREEN + "Added time"
+
 
 def today():
     pass

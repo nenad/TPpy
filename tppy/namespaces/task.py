@@ -1,5 +1,6 @@
 from api.entities import task
 from repositories.story.storyHttpImpl import StoryHTTPImpl
+from tppy.integrations.git import helpers
 
 
 def create(task_name, story_id):
@@ -7,6 +8,8 @@ def create(task_name, story_id):
 
 
 def story(story_id):
+    if story_id == 'current':
+        story_id = helpers.getCurrentTicketNumber()
     story = StoryHTTPImpl().findWithTasks(story_id)
     tasks = story.tasks
 

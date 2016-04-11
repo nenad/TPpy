@@ -2,6 +2,7 @@ import subprocess
 import re
 
 from configuration import config
+from repositories.assignable.assignableRepo import AssignableRepository
 from tppy.integrations.git.exceptions.NoSuitableBranchFound import NoSuitableBranchFound
 
 
@@ -25,10 +26,9 @@ def getCurrentTicketNumber():
 
 
 def getTicketType():
-    raise NotImplementedError
+    id = getCurrentTicketNumber()
+    assignable = AssignableRepository().find(id)
 
 
 def getCurrentTicket():
-    raise NotImplementedError
-
-
+    return config.get('hostname') + "/entity/" + getCurrentTicketNumber()
