@@ -43,9 +43,15 @@ class TPRequest:
 
     def _set_user(self):
         from api.tpApi import TPApi
+        prev_id = self.entity_id
+        prev_url = self.basicUrl
+        prev_incl = self.includedProperties
         self.setId('loggeduser')
         self.setBasicUrl(TPApi().getEntityTypeURL('Users'))
         self.setIncludedProperties(['Id', 'FirstName', 'LastName'])
         response = self.get()
         data = json.loads(response.content)
         config.set_project_var('user_id', data['Id'])
+        self.setBasicUrl(prev_url)
+        self.entity_id = prev_id
+        self.setIncludedProperties(prev_incl)
