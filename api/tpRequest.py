@@ -1,3 +1,5 @@
+import json
+
 from configuration import config
 from requests.auth import HTTPBasicAuth
 import requests
@@ -10,6 +12,8 @@ class TPRequest:
         self.password = config.get('password')
         self.basicUrl = ""
         self.includedProperties = ['Name']
+        if config.get_project_var('user_id') is None:
+            self._set_user()
 
     def setBasicUrl(self, url):
         self.basicUrl = url
@@ -36,3 +40,12 @@ class TPRequest:
         else:
             url += '?format=json'
         return requests.post(url, data, auth=HTTPBasicAuth(self.username, self.password))
+
+    def _set_user(self):
+        from api.tpApi import TPApi
+        self.setId('loggeduser')
+        self.setBasicUrl(TPApi().getEntityTypeURL('Users'))
+        self.setIncludedProperties(['Id', 'FirstName', 'LastName'])
+        response = self.get()
+        data = json.loads(response.content)
+        config.set_project_var('user_id', data['Id'])

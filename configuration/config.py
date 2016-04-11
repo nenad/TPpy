@@ -26,9 +26,20 @@ def loadProjectConfig():
 
 
 def get_project_var(var):
-    return project_vars[var]
+    try:
+        return project_vars[var]
+    except KeyError:
+        return None
 
 
 def set_project_var(var, value):
     global project_vars
     project_vars[var] = value
+    path = sys.path[1] + "/.tppy.json"
+    if os.path.isfile(path):
+        try:
+            conf_file = open(path, 'w')
+            data = json.dumps(project_vars)
+            conf_file.write(data)
+        except:
+            print "Can't save settings in .tppy.json file"

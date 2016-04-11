@@ -1,5 +1,6 @@
 {
   "hostname": "tp.hostname.here",
   "username": "username-here",
-  "password": "password-here"
+  "password": "password-here",
+  "branch_regex": ".*/(\\d+).*"
 }
