@@ -1,3 +1,5 @@
+import datetime
+
 from api.entities import time
 from repositories.assignable.assignableRepo import AssignableRepository
 from repositories.story.storyHttpImpl import StoryHTTPImpl
@@ -50,11 +52,15 @@ def add(description, hours):
     print "Total time for today: %s" % total_time
 
 
-def today():
-    times = time.today()
+def date(date_str):
+    times = time.atDate(date_str)
     total = 0
     for t in times:
         total += float(t.spent)
         print "[%s] - %s (%s - %s)" % (t.spent, t.description, t.assignable.name, t.assignable.id)
     print "Total [%s]" % total
 
+
+def today():
+    date_today = datetime.datetime.today().strftime('%Y-%m-%d')
+    return date(date_today)
