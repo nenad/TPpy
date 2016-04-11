@@ -67,3 +67,12 @@ def date(date_str):
 def today():
     date_today = datetime.datetime.today().strftime('%Y-%m-%d')
     return date(date_today)
+
+
+def add_prompt(description):
+    try:
+        hours = float(raw_input("How much hours did you spent on this ticket? "))
+        add(description, hours)
+    except:
+        print "Not a valid input"
+        exit()
