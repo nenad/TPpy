@@ -42,7 +42,8 @@ class TPRequest:
             url += '&format=json'
         else:
             url += '?format=json'
-        return requests.post(url, data, auth=HTTPBasicAuth(self.username, self.password))
+        properties = "&include=[" + ",".join(self.includedProperties) + "]"
+        return requests.post(url + properties, data, auth=HTTPBasicAuth(self.username, self.password))
 
     def _set_user(self):
         from api.tpApi import TPApi

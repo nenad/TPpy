@@ -11,10 +11,14 @@ from colorama import init
 from colorama import Fore
 
 
-def add(description, hours):
+def add(description, hours, ticket_id='current'):
     init()
-    assignable_id = getTicketNumber(getCurrentBranch())
     assignable = None
+    if ticket_id == 'current':
+        assignable_id = getTicketNumber(getCurrentBranch())
+    else:
+        assignable_id = ticket_id
+
     try:
         assignable = AssignableRepository().find(assignable_id)
     except:
@@ -48,8 +52,7 @@ def add(description, hours):
 
     # Add time to task
     print Fore.GREEN + "Added time"
-    total_time = today()
-    print "Total time for today: %s" % total_time
+    today()
 
 
 def date(date_str):

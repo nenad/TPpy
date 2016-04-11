@@ -11,6 +11,7 @@ def create(description, hours, assignable_id):
     api = TPApi()
     request = TPRequest()
     request.setBasicUrl(api.getEntityTypeURL('Times'))
+    request.setIncludedProperties(['Description', 'Spent', 'Assignable[Id, Name, EntityType[Name]]'])
 
     data = {
         "Description": description,
