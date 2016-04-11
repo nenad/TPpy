@@ -1,7 +1,7 @@
+from api.entities import time
 from repositories.assignable.assignableRepo import AssignableRepository
 from repositories.story.storyHttpImpl import StoryHTTPImpl
 from tppy.integrations.git.exceptions.NoSuitableBranchFound import NoSuitableBranchFound
-from tppy.namespaces import time
 import api.entities.task as taskEntity
 from tppy.integrations.git.helpers import getCurrentBranch
 from tppy.integrations.git.helpers import getTicketNumber
@@ -46,7 +46,15 @@ def add(description, hours):
 
     # Add time to task
     print Fore.GREEN + "Added time"
+    total_time = today()
+    print "Total time for today: %s" % total_time
 
 
 def today():
-    pass
+    times = time.today()
+    total = 0
+    for t in times:
+        total += float(t.spent)
+        print "[%s] - %s (%s - %s)" % (t.spent, t.description, t.assignable.name, t.assignable.id)
+    print "Total [%s]" % total
+

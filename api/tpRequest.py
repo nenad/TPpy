@@ -7,6 +7,7 @@ import requests
 
 class TPRequest:
     def __init__(self):
+        self.query = ""
         self.entity_id = ""
         self.username = config.get('username')
         self.password = config.get('password')
@@ -24,13 +25,15 @@ class TPRequest:
     def setId(self, entity_id):
         self.entity_id = "/" + entity_id.__str__()
 
+    def setQuery(self, query):
+        self.query = '&where=' + query
+
     def get(self, url="", return_format='json'):
         return_format = "?format=" + return_format
         properties = "&include=[" + ",".join(self.includedProperties) + "]"
         if url == "":
             url = self.basicUrl
-        return requests.get(url + self.entity_id + return_format + properties,
-                            auth=HTTPBasicAuth(self.username, self.password))
+        return requests.get(url + self.entity_id + return_format + properties + self.query, auth=HTTPBasicAuth(self.username, self.password))
 
     def post(self, url="", data=""):
         if url == "":
@@ -55,3 +58,5 @@ class TPRequest:
         self.setBasicUrl(prev_url)
         self.entity_id = prev_id
         self.setIncludedProperties(prev_incl)
+
+
