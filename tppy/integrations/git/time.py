@@ -3,15 +3,21 @@ import datetime
 from api.entities import time
 from repositories.assignable.assignableRepo import AssignableRepository
 from repositories.story.storyHttpImpl import StoryHTTPImpl
-from tppy.integrations.git.exceptions.NoSuitableBranchFound import NoSuitableBranchFound
 import api.entities.task as taskEntity
-from tppy.integrations.git.helpers import getCurrentBranch
-from tppy.integrations.git.helpers import getTicketNumber
-from colorama import init
-from colorama import Fore
+from colorama import Fore, Style
 
 
 def add(description, hours, ticket_id='current'):
+    """
+    Creates a timesheet entry in TP for a given ticket
+    :param description: Timesheet description
+    :param hours: Hours worked on the ticket
+    :param ticket_id: Ticket ID, default is current branch
+    """
+    from tppy.integrations.git.helpers import getCurrentBranch
+    from tppy.integrations.git.helpers import getTicketNumber
+    from colorama import init
+
     init()
     assignable = None
     if ticket_id == 'current':
@@ -29,8 +35,8 @@ def add(description, hours, ticket_id='current'):
         story = StoryHTTPImpl().findWithTasks(assignable_id)
         tasks = story.tasks if story.tasks is not None else []
         while True:
+            print "[0] CREATE NEW TASK"
             if len(tasks) > 0:
-                print "[0] CREATE NEW TASK"
                 for index, task in enumerate(tasks, 1):
                     print "[%d] %s" % (index, task.name)
             try:
@@ -56,20 +62,39 @@ def add(description, hours, ticket_id='current'):
 
 
 def date(date_str):
+    """
+    Prints timesheet for given date
+    :param date_str: Date in format YYYY-MM-DD
+    """
     times = time.atDate(date_str)
     total = 0
     for t in times:
         total += float(t.spent)
         print "[%s] - %s (%s - %s)" % (t.spent, t.description, t.assignable.name, t.assignable.id)
-    print "Total [%s]" % total
+    print Fore.YELLOW + "Total [%s]" % total + Style.RESET_ALL
 
 
 def today():
+    """
+    Prints today's timesheet
+    """
     date_today = datetime.datetime.today().strftime('%Y-%m-%d')
-    return date(date_today)
+    date(date_today)
+
+
+def yesterday():
+    """
+    Prints yesterday's timesheet
+    """
+    date_yesterday = datetime.datetime.today() - datetime.timedelta(1)
+    date(date_yesterday.strftime('%Y-%m-%d'))
 
 
 def add_prompt(description):
+    """
+    Prompts you for hours spent on the current ticket.
+    :param description: Timesheet description
+    """
     try:
         hours = float(raw_input("How many hours did you spent on this ticket? (ex. 2.5)  "))
         add(description, hours)
