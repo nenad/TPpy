@@ -1,6 +1,15 @@
 import types
 
 
+class EntityType:
+    def __init__(self):
+        pass
+
+    BUG = 'Bug'
+    USERSTORY = 'UserStory'
+    TASK = 'Task'
+
+
 class Entity:
     def __init__(self):
         self.id = 0  # Integer
