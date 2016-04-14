@@ -11,5 +11,6 @@ class AssignableMapper(Mapper):
         assignable.id = json_object['Id']
         assignable.name = json_object['Name']
         assignable.entityType = json_object['EntityType']['Name']
+        assignable.entityState = json_object['EntityState']['Name']
 
         return assignable

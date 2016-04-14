@@ -90,14 +90,3 @@ def yesterday():
     date(date_yesterday.strftime('%Y-%m-%d'))
 
 
-def add_prompt(description):
-    """
-    Prompts you for hours spent on the current ticket.
-    :param description: Timesheet description
-    """
-    try:
-        hours = float(raw_input("How many hours did you spent on this ticket? (ex. 2.5)  "))
-        add(description, hours)
-    except:
-        print "Not a valid input"
-        exit()

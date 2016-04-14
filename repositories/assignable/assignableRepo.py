@@ -14,6 +14,6 @@ class AssignableRepository:
         request = TPRequest()
         request.setBasicUrl(api.getEntityTypeURL('Assignables'))
         request.setId(assignable_id)
-        request.setIncludedProperties(['Name', 'Id', 'Description', 'EntityType[Name]'])
+        request.setIncludedProperties(['Name', 'Id', 'Description', 'EntityType[Name]', 'EntityState'])
         response = request.get()
         return AssignableMapper().map(json.loads(response.content))
