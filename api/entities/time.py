@@ -11,7 +11,8 @@ def create(description, hours, assignable_id):
     api = TPApi()
     request = TPRequest()
     request.setBasicUrl(api.getEntityTypeURL('Times'))
-    request.setIncludedProperties(['Description', 'Spent', 'Assignable[Id, Name, EntityType[Name]]'])
+    request.setIncludedProperties(
+        ['Description', 'Spent', 'Assignable[Id, Name, EntityType[Name], EntityState[Name]]'])
 
     data = {
         "Description": description,
@@ -30,7 +31,7 @@ def atDate(date_str):
     req = TPRequest()
     mapper = TimeMapper()
     req.setBasicUrl(api.getEntityTypeURL('Times'))
-    req.setIncludedProperties(['Description', 'Spent', 'Assignable[Id, Name, EntityType[Name]]'])
+    req.setIncludedProperties(['Description', 'Spent', 'Assignable[Id, Name, EntityType[Name], EntityState[Name]]'])
     user_id = config.get_project_var('user_id')
     req.setQuery("(User.Id eq %s) and (Date eq '%s')" % (user_id, date_str))
     response = req.get()
@@ -39,4 +40,3 @@ def atDate(date_str):
     for item in times_json['Items']:
         times.append(mapper.map(item))
     return times
-

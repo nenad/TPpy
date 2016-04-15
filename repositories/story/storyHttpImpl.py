@@ -37,7 +37,7 @@ class StoryHTTPImpl(StoryRepository):
         request = TPRequest()
         request.setBasicUrl(self.tp.getEntityTypeURL(self.entityType))
         request.setId(story_id)
-        request.setIncludedProperties(['Tasks, Name, EntityState'])
+        request.setIncludedProperties(['Tasks[Id, Name, EntityState, EntityType], Name, EntityState'])
         response = request.get()
         json_object = json.loads(response.content)
         return self.storyMapper.map(json_object)
